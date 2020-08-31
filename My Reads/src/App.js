@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import SearchBooks from './SearchBooks'
+import BooksSearch from './BooksSearch'
 import * as BooksAPI from './BooksAPI'
 import ListBooks from './ListBooks'
 // import * as BooksAPI from './BooksAPI'
@@ -11,6 +11,7 @@ class BooksApp extends React.Component {
   state={
     books: []
   }
+  /* This is componentDidMount that being invoked each run, so I call getAll from BookAPI to load the books */
   componentDidMount() {
     BooksAPI
       .getAll()
@@ -18,7 +19,12 @@ class BooksApp extends React.Component {
         this.setState({books})
       })
   }
-  onShelfChange = (book, shelf) => {
+
+  /* 
+    onShelfChanges a function that manages moving books between different shelves.
+    Updating the BookApi to display the new changes => each book according to its shelf
+  */
+  onShelfChanges = (book, shelf) => {
     book.shelf = shelf
     this.setState(state => ({
       books: state
@@ -31,6 +37,10 @@ class BooksApp extends React.Component {
 
   render() {
     return (
+      /* BooksApp is the main app in the application
+      It contains a div element that has 2 routes:
+      1- the home page '/'
+      2- the search page '/search' */
       <div className="app">
         <Route
           path="/"
@@ -40,15 +50,14 @@ class BooksApp extends React.Component {
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>
-            <ListBooks books={this.state.books} onShelfChange={this.onShelfChange}/>
+            <ListBooks books={this.state.books} onShelfChanges={this.onShelfChanges}/>
           </div>
         )}/>
 
         <Route
           path="/search"
-          render={({history}) => (<SearchBooks
-          onShelfChange={this.onShelfChange}
-          history={history}
+          render={() => (<BooksSearch
+          onShelfChanges={this.onShelfChanges}
           books={this.state.books}/>)}/>
       </div>
     )

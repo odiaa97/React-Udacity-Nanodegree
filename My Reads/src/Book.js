@@ -1,13 +1,14 @@
 import React from 'react'
 
 
-
+/* the Book Component is responsible for displaying the book in addition to managing moving books from shelf to another */
 class Book extends React.Component{
      ShelfChanger = (e) => {
         const shelf = e.target.value;
-        this.props.onShelfChange(this.props.book, shelf);
+        this.props.onShelfChanges(this.props.book, shelf);
     };
 
+    /* The Book Component renders the book image, the book shelf changer icon, book title and book author */
     render() {
       const {book} = this.props;
       let image = book.imageLinks ? book.imageLinks.thumbnail : 'https://books.google.com/googlebooks/images/no_cover_thumb.gif'

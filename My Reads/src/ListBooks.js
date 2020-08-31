@@ -7,12 +7,12 @@ import BookShelf from './BookShelf'
 
 function ListBooks(props){
 
-   const { onShelfChange } = props;
+   const { onShelfChanges } = props;
    const currentlyReading = props.books.filter((book) => book.shelf === 'currentlyReading')
    const wantToRead =props.books.filter((book) => book.shelf === 'wantToRead')
    const read =props.books.filter((book) => book.shelf === 'read')
   
- 
+    /* The ListBooks is responsible for displaying the book shelves */
    return(
     <div className="list-books">
         <div className="list-books-content">
@@ -20,18 +20,18 @@ function ListBooks(props){
           <BookShelf 
               bookshelfTitle='Currently Reading'd
               bookshelfBooks={currentlyReading}
-              onShelfChange={onShelfChange}
+              onShelfChanges={onShelfChanges}
               
           />
           <BookShelf
               bookshelfTitle='Want to Read'
               bookshelfBooks={wantToRead}
-              onShelfChange={onShelfChange}
+              onShelfChanges={onShelfChanges}
           />
           <BookShelf 
               bookshelfTitle='Read' 
               bookshelfBooks={read}
-              onShelfChange={onShelfChange}
+              onShelfChanges={onShelfChanges}
           />
         </div>
       </div>

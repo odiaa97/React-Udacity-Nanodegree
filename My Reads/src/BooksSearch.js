@@ -3,11 +3,12 @@ import {Link} from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import Book from './Book';
 
-class SearchBooks extends React.Component {
+class BooksSearch extends React.Component {
     state = {
         searchResults: []
     }
 
+    /* search function is a function that being invoked each time you changes the input search value to update the books you search for */
     search = (e) => {
         const query = e.target.value;
         if (!query) {
@@ -15,11 +16,13 @@ class SearchBooks extends React.Component {
             console.log(this.state.searchResults)
             return;
         }
+        /* if there is no search input display nothing */
         BooksAPI.search(query, 20).then(searchResults => {
                 if (!searchResults || searchResults.error) {
                     this.setState({searchResults: []});
                     return;
-                }             
+                }
+                /* if there is input value return the matched book with the same name in the input */
                 searchResults = searchResults.map((book) => {
                     const bookOnShelf = this.props.books
                         .find(b => b.id === book.id);
@@ -32,7 +35,7 @@ class SearchBooks extends React.Component {
                 this.setState({searchResults});
             });
     };
-
+    /* Search Component is responsible for displaying an input field and a link to go back to the home page */
     render() {
         return (
             <div className="search-books">
@@ -52,7 +55,7 @@ class SearchBooks extends React.Component {
                             .searchResults
                             .map((book, index) => (
                                 <li key={book.id + index}>
-                                    <Book book={book} onShelfChange={this.props.onShelfChange}/>
+                                    <Book book={book} onShelfChanges={this.props.onShelfChanges}/>
                                 </li>
                             ))}
                             
@@ -64,4 +67,4 @@ class SearchBooks extends React.Component {
     }
 }
 
-export default SearchBooks
+export default BooksSearch
